@@ -24,6 +24,7 @@ class Chat extends React.Component {
   state = {
     friends: [],
     error: null,
+    error2: null,
     search: false,
     searchedValue: "",
     searchedFriend: null,
@@ -38,6 +39,7 @@ class Chat extends React.Component {
     })
       .then((res) => res.json())
       .then((resp) => {
+        console.log(resp)
         this.setState({
           friends: resp,
         });
@@ -55,6 +57,7 @@ class Chat extends React.Component {
   searchFriend = (searchedValue) => {
     this.setState({
       error: null,
+      error2: null
     });
     fetch(`http://localhost:3000/users?username=${searchedValue}`, {
       method: "GET",
@@ -94,11 +97,31 @@ class Chat extends React.Component {
       .then((res) => res.json())
       .then((resp) => {
         console.log(resp);
+        if(resp.error){
+          this.setState({
+            error2: resp.error
+          })
+        }
+        else
+        {user2.friendshipID=resp.id
         this.setState({
-          friends: [...this.state.friends, user2],
-        });
+          friends: [...this.state.friends,user2]
+        })}
       });
   };
+  deleteFriend=(selectedFriend)=>{
+    console.log(selectedFriend.friendshipID)
+    console.log(selectedFriend.id)
+    console.log(this.state.friends)
+    fetch(`http://localhost:3000/friendships/${selectedFriend.friendshipID}`,{
+      method: 'DELETE'
+    })
+    .then(
+      this.setState({
+        friends: this.state.friends.filter(friend=> friend.id !== selectedFriend.id)
+    }))
+  }
+
   render() {
     return (
       <>
@@ -130,6 +153,11 @@ class Chat extends React.Component {
               >
                 Search
               </Button>
+              {this.state.error2? (
+                <ul style={{ color: "red" }}>
+                  <li>{this.state.error2}</li>
+                </ul>
+                ) : null}
               {this.state.searchedFriend ? (
                 <Card>
                   <CardContent>
@@ -217,7 +245,7 @@ class Chat extends React.Component {
                   </Button>
                   <Button
                     onClick={() => {
-                      // delete user here
+                     this.deleteFriend(friend)
                     }}
                   >
                     <DeleteIcon />
