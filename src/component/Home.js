@@ -40,9 +40,11 @@ class Chat extends React.Component {
       .then((res) => res.json())
       .then((resp) => {
         console.log(resp)
-        this.setState({
-          friends: resp,
-        });
+        resp.map(friendship=>
+          this.setState({
+            friends: [...this.state.friends,{friend_id: friendship.friend_id, friend_username: friendship.friend_username, friendshipID: friendship.id}]
+          }) 
+          ) 
       });
   }
 
@@ -92,7 +94,7 @@ class Chat extends React.Component {
         "Content-Type": "application/json",
         "Auth-key": localStorage.getItem("auth_key"),
       },
-      body: JSON.stringify({ user2_id: user2.id }),
+      body: JSON.stringify({ user2_id: user2.id, friend_username: user2.username }),
     })
       .then((res) => res.json())
       .then((resp) => {
@@ -105,24 +107,25 @@ class Chat extends React.Component {
         else
         {user2.friendshipID=resp.id
         this.setState({
-          friends: [...this.state.friends,user2]
+          friends: [...this.state.friends,{friend_id: resp.friend_id, friend_username: resp.friend_username, friendshipID: resp.id}]
         })}
       });
   };
   deleteFriend=(selectedFriend)=>{
     console.log(selectedFriend.friendshipID)
-    console.log(selectedFriend.id)
+    console.log(selectedFriend.friend_id)
     console.log(this.state.friends)
     fetch(`http://localhost:3000/friendships/${selectedFriend.friendshipID}`,{
       method: 'DELETE'
     })
     .then(
       this.setState({
-        friends: this.state.friends.filter(friend=> friend.id !== selectedFriend.id)
+        friends: this.state.friends.filter(friend=> friend.friend_id !== selectedFriend.friend_id)
     }))
   }
 
   render() {
+    console.log(this.state.friends)
     return (
       <>
         <Dialog
@@ -240,7 +243,7 @@ class Chat extends React.Component {
                       margin: "10px 0",
                     }}
                   >
-                    <Typography variant="h6">{friend.username}</Typography>
+                    <Typography variant="h6">{friend.friend_username}</Typography>
                     <ChatIcon />
                   </Button>
                   <Button
