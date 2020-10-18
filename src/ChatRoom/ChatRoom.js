@@ -1,5 +1,5 @@
 import React from "react";
-import Chat from './Chat'
+// import Chat from '../../Chat'
 import SideBar from './SideBar'
 import { Button } from "@material-ui/core";
 import "./ChatRoom.css";
@@ -19,8 +19,8 @@ const ChatRoom = (props) => {
     setNewMessage("");
   };
   const handleLogout = () => {
-    console.log("logout");
-    this.props.history.push("/logout");
+    console.log("logout")
+    props.history.push("/logout");
   };
   
   return (
