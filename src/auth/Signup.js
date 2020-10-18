@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Paper, TextField, Card, CardContent} from '@material-ui/core';
-import { BrowserRouter, Route, Switch, Redirect, NavLink} from 'react-router-dom';
 import {withRouter} from 'react-router'
 
 class SignUp extends React.Component {

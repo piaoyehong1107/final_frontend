@@ -41,7 +41,7 @@ class Login extends React.Component {
       }else
         {
           // console.log("Home")
-          this.props.history.push('/')
+          this.props.history.push('/chat')
         }
       }
       )

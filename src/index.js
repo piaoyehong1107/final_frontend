@@ -6,9 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route, Switch, Redirect, NavLink} from 'react-router-dom';
 import Login from './auth/Login';
 import SignUp from './auth/Signup';
-import Home from './component/Home'
 import {Button, CardMedia,Paper, TextField, Card, CardContent} from '@material-ui/core';
 import bg from './bg.png'
+import ChatRoom from './ChatRoom/ChatRoom';
 
 
 ReactDOM.render(
@@ -21,7 +21,7 @@ ReactDOM.render(
             <Route exact path='/' component={()=>{
               if (localStorage.getItem('auth_key'))
               {
-                return <Home />
+                return <ChatRoom />
               }else
              {return <App />}
             }} />
