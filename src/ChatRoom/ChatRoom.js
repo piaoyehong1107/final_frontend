@@ -1,13 +1,14 @@
 import React from "react";
-// import Chat from '../../Chat'
 import SideBar from './SideBar'
 import { Button } from "@material-ui/core";
+import { withRouter } from "react-router";
 import "./ChatRoom.css";
-import useChat from "../useChat";
+import useChat from "./useChat";
 
 const ChatRoom = (props) => {
-  // const { roomId } = props.match.params;
-  const { roomId } = 1;
+  console.log({props})
+  const [roomId, setRoomId] = React.useState("Choose Room")
+  console.log({roomId})
   const { messages, sendMessage } = useChat(roomId);
   const [newMessage, setNewMessage] = React.useState("");
 
@@ -23,10 +24,18 @@ const ChatRoom = (props) => {
     props.history.push("/logout");
   };
   
+  const handleChatRoom = (friend_username) => {
+    const user_username = localStorage.getItem("user_name");
+    const roomId = [user_username, friend_username].sort().join("&");
+    console.log(roomId);
+    // this.props.history.push(`/${roomId}`);
+    setRoomId(roomId)
+  };
+
   return (
     <div>
       <div className="page-container">
-      <SideBar/>
+      <SideBar roomId={console.log(props.roomId)} handleChatRoom={handleChatRoom}/>
         <div className="chat-room-container">
           <h1 className="room-name">Room: {roomId}</h1>
           <div className="messages-container">
@@ -60,4 +69,4 @@ const ChatRoom = (props) => {
     </div>
   );
 };
-export default ChatRoom;
+export default withRouter(ChatRoom);
