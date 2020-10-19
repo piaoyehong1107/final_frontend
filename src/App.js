@@ -1,18 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from "react";
+import "./index.css";
 import {Button, Paper, TextField, Card, CardContent} from '@material-ui/core';
 import './App.css';
 import {withRouter} from 'react-router'
-
-// const link={
-//   width: '100px',
-//   padding: '12px',
-//   margin: '0 6px 6px',
-//   borderRadius: '6px',
-//   background: '#',
-//   textDecoration: 'none',
-//   color: 'blue'
-// }
 
 class App extends React.Component {
   goToLogin=()=>{

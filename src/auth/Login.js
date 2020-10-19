@@ -9,7 +9,8 @@ class Login extends React.Component {
   state = {
     username: '',
     password: '',
-    error: null
+    error: null,
+    currentUser: ''
   }
 
   handleInputChange = (e) => {
@@ -32,16 +33,17 @@ class Login extends React.Component {
       body: JSON.stringify(newUser)
     }).then(res => res.json())
     .then(resp=>{
-      // console.log(resp)
-      localStorage.setItem('auth_key', resp['auth_key'])
+      console.log(resp['user'])
+      localStorage.setItem('auth_key', resp['auth_key'],)
+      localStorage.setItem('user_name',resp['user'])
       if (resp.error){
           this.setState({
-            error: resp.error
+            error: resp.error,
           })
       }else
         {
           // console.log("Home")
-          this.props.history.push('/')
+          this.props.history.push('/chat')
         }
       }
       )
