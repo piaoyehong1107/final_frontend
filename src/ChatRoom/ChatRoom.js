@@ -34,7 +34,11 @@ const ChatRoom = (props) => {
 
   return (
     <div>
-      <div className="page-container">
+      <div className="page-container" style={{
+        display: 'flex',
+        height: '85vh',
+        padding: '10px'
+      }}>
       <SideBar roomId={console.log(props.roomId)} handleChatRoom={handleChatRoom}/>
         <div className="chat-room-container">
           <h1 className="room-name">Room: {roomId}</h1>
@@ -57,13 +61,14 @@ const ChatRoom = (props) => {
             onChange={handleNewMessageChange}
             placeholder="Write message..."
             className="new-message-input-field"
+            style={{marginTop: '20px'}}
           />
-          <button onClick={handleSendMessage} className="send-message-button">
+          <button style={{marginTop: '5px'}} onClick={handleSendMessage} className="send-message-button">
             Send
           </button>
         </div>
       </div>
-      <Button variant="contained" color="primary" onClick={handleLogout}>
+      <Button style={{marginLeft: '10px'}} variant="contained" color="primary" onClick={handleLogout}>
         Logout
       </Button>
     </div>
