@@ -236,37 +236,38 @@ class SideBar extends React.Component {
                 flexDirection: 'column'
               }}
             >
-              <CardContent style={{display: 'flex', alignItems: 'center'}}>
-                    <Avatar src={require(`../static/images/avatar/${localStorage.getItem("photo_id")}.png`)} /> 
-                    <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
+              <CardContent style={{display: 'flex', alignContent: 'center', flexDirection: 'column'}}>
+                  <div style={{display: 'flex', alignItems: 'center'}}>
+                    <Avatar style={{marginRight: '10px'}} src={require(`../static/images/avatar/${localStorage.getItem("photo_id")}.png`)} /> 
+                    <Typography  color="textSecondary" >
                       {localStorage.getItem("user_name").toUpperCase()}
                     </Typography>
-                    <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
+                  </div>
+                    <Typography  color="textSecondary">
                       {localStorage.getItem("email")}
                     </Typography>
               </CardContent>
                     <Typography style={{ margin: '10px 10px 10px 5px'}} variant="h6" component="h3">
                     Welcome! 
                     </Typography>
-              <div style={{display: 'flex', alignItems: 'center', marginBottom: '5px'}}>
-              <Typography
-                style={{ margin: 0 }}
-                color="textSecondary" 
-                gutterBottom
-              >
-                Friends:
-              </Typography>
-              <IconButton
-                aria-label="add"
-                style={{margin: 0, padding: 0}}
-                onClick={() => {
-                  this.setState({
-                    search: true,
-                  });
-                }}
-              >
-                <AddIcon fontSize="medium" />
-              </IconButton>
+              <div style={{display: 'flex', justifyContent: 'flex-start', marginBottom: '5px'}}>
+                <Typography
+                  style={{ margin: 0 }}
+                  color="textSecondary" 
+                >
+                  Friends:
+                </Typography>
+                <IconButton
+                  aria-label="add"
+                  style={{margin: 0, padding: 0}}
+                  onClick={() => {
+                    this.setState({
+                      search: true,
+                    });
+                  }}
+                >
+                  <AddIcon fontSize="medium" />
+                </IconButton>
               </div>
             </div>
             {this.state.friends.map((friend) => (
