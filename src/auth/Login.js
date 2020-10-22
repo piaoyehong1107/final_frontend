@@ -2,7 +2,7 @@ import React from 'react';
 import {
   withRouter
 } from 'react-router';
-import {Button, Paper, TextField, Card, CardContent} from '@material-ui/core';
+import {Button,  TextField} from '@material-ui/core';
 
 class Login extends React.Component {
 
@@ -59,12 +59,12 @@ class Login extends React.Component {
       }}>
       <span className={'form-outer'} >
         <h2 style={{marginLeft: '20px'}}> Login </h2>
-        <form className={'add-book'} style={{
+        <form className={'add-user'} style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           height: '300px',
-          margin: '100px 300px',
+          margin: '250px 300px',
           justifyContent: 'space-evenly'
         }}>
           <TextField

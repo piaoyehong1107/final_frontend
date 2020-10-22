@@ -8,15 +8,11 @@ import {
   Route,
   Switch,
   Redirect,
-  NavLink,
 } from "react-router-dom";
 import Login from "./auth/Login";
 import SignUp from "./auth/Signup";
 import {
-  Button,
-  CardMedia,
   Paper,
-  TextField,
   Card,
   CardContent,
 } from "@material-ui/core";
@@ -33,7 +29,6 @@ ReactDOM.render(
     }}
   >
     <CardContent style={{}}>
-      {/* <img src={bg} alt="Logo" > */}
       <Paper style={{ padding: "20px" }}>
         <BrowserRouter>
           <Switch>

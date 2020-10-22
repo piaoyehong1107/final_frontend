@@ -11,13 +11,14 @@ import Avatar from "@material-ui/core/Avatar";
 
 const ChatRoom = (props) => {
   console.log({ props });
-  const [roomId, setRoomId] = useState("Choose Room");
+  const [roomId, setRoomId] = useState("");
   console.log({ roomId });
   const { messages, sendMessage, setMessages } = useChat(roomId);
   console.log({messages})
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState();
   const [chatStart, setChatStart] = useState(false);
   const [friendPhotoId, setFriendPhotoId] = useState()
+  const [friend_username, setFriendUsername] = useState()
   console.log({ chatStart, friendPhotoId });
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -32,18 +33,12 @@ const ChatRoom = (props) => {
     props.history.push("/logout");
   };
 
-  const handleChatRoom = (friend_username, friend_photoId) => {
-    const user_username = localStorage.getItem("user_name");
-    const roomId = [user_username, friend_username].sort().join(" & ");
-    console.log(roomId);
-    setRoomId(roomId);
+  const handleChatRoom = (roomId, friend_username, friend_photoId) => {
     setFriendPhotoId(friend_photoId)
-  };
-
-  const handleChatStart = (status) => {
-    props.history.push(`/chat/${roomId}`);
-    setChatStart(status);
+    setRoomId(roomId);
+    setChatStart(true);
     setMessages([]);
+    setFriendUsername(friend_username)
   };
 
   return (
@@ -52,19 +47,18 @@ const ChatRoom = (props) => {
         className="page-container"
         style={{
           display: "flex",
-          height: "85vh",
+          height: "84vh",
           padding: "10px",
         }}
       >
         <SideBar
-          handleChatStart={handleChatStart}
           roomId={console.log(props.roomId)}
           handleChatRoom={handleChatRoom}
           chatStart={props.chatStart}
         />
         {chatStart ? (
           <div className="chat-room-container">
-            <h1 className="room-name">Room: {roomId}</h1>
+            <h3 className="room-name">Send message to {friend_username.toUpperCase()}</h3>
             <div className="messages-container">
               <ol className="messages-list">
                 {messages.map((message, i) => (

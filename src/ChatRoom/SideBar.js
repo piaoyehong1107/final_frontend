@@ -144,8 +144,11 @@ class SideBar extends React.Component {
   chatStart=(friend)=>{
     console.log({friend})
     const { friend_username, friend_photoId }=friend
-    this.props.handleChatRoom(friend_username, friend_photoId)
-    this.props.handleChatStart(true)
+    const user_username = localStorage.getItem("user_name");
+    const roomId = [user_username, friend_username].sort().join(" & ");
+    console.log(roomId);
+    this.props.history.push(`/chat/${roomId}`);
+    this.props.handleChatRoom(roomId,friend_username, friend_photoId)
   }
 
   render() {
@@ -234,15 +237,17 @@ class SideBar extends React.Component {
               }}
             >
               <CardContent style={{display: 'flex', alignItems: 'center'}}>
-                  <Avatar src={require(`../static/images/avatar/${localStorage.getItem("photo_id")}.png`)} /> 
-                  <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
-                    {localStorage.getItem("user_name").toUpperCase()}
-                  </Typography>
-                  <Typography variant="h6" component="h3">
-                  Welcome! 
-                  </Typography>
+                    <Avatar src={require(`../static/images/avatar/${localStorage.getItem("photo_id")}.png`)} /> 
+                    <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
+                      {localStorage.getItem("user_name").toUpperCase()}
+                    </Typography>
+                    <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
+                      {localStorage.getItem("email")}
+                    </Typography>
               </CardContent>
-              
+                    <Typography style={{ margin: '10px 10px 10px 5px'}} variant="h6" component="h3">
+                    Welcome! 
+                    </Typography>
               <div style={{display: 'flex', alignItems: 'center', marginBottom: '5px'}}>
               <Typography
                 style={{ margin: 0 }}

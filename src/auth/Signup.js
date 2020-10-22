@@ -72,7 +72,7 @@ class SignUp extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '800px',
+          height: '780px',
           margin: '0px 300px',
           justifyContent: 'space-evenly'
         }}>
