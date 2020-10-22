@@ -1,12 +1,16 @@
 import React from 'react';
-import {Button, Paper, TextField, Card, CardContent} from '@material-ui/core';
+import {Button, TextField} from '@material-ui/core';
 import {withRouter} from 'react-router'
+import ImageSelection from './ImageSelection'
+
 
 class SignUp extends React.Component {
 
   state = {
     username: '',
     password: '',
+    email: '',
+    photo_id: '',
     error: []
   }
 
@@ -21,7 +25,9 @@ class SignUp extends React.Component {
     const newUser = {
       user: {
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
+        email: this.state.email,
+        photo_id: this.state.photo_id
       }
     }
     fetch('http://localhost:3000/signup',{
@@ -46,6 +52,13 @@ class SignUp extends React.Component {
       }
       )
   }
+  
+  onPick=(image)=>{
+    this.setState({
+      photo_id : `img_${image.value}`
+    })
+    console.log(image.value)
+  }
 
   render(){
     console.log(this.state.error)
@@ -59,8 +72,8 @@ class SignUp extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '300px',
-          margin: '100px 300px',
+          height: '800px',
+          margin: '0px 300px',
           justifyContent: 'space-evenly'
         }}>
           <TextField
@@ -85,6 +98,19 @@ class SignUp extends React.Component {
             variant="outlined"
             onChange={this.handleInputChange}
           />
+           <TextField
+            id="email"
+            name="email"
+            label="Email"
+            type="mail"
+            style={{width: '250px'}}
+            value={this.state.email}
+            autoComplete="current-email"
+            variant="outlined"
+            onChange={this.handleInputChange}
+          />
+          <div style={{marginTop: '20px', fontSize: '20px', color: 'grey'}}>Choose your avartar</div>
+          <ImageSelection onPick={this.onPick}/>
           <Button variant="contained" color="primary" onClick={this.handleSubmit}>Submit</Button>
           {this.state.error.length>0 ? 
           <ul style={{color: 'red'}}>{this.state.error.map(mes=><li>{mes}</li>)} </ul> : null

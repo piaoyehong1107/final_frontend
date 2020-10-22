@@ -1,23 +1,20 @@
 import React from "react";
 import {
   Button,
-  Paper,
-  TextField,
   Card,
   CardContent,
   CardActions,
   Typography,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogContentText,
-  DialogTitle,
+  makeStyles
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import ChatIcon from "@material-ui/icons/Chat";
 import { withRouter } from "react-router";
+import Avatar from '@material-ui/core/Avatar';
 
 class SideBar extends React.Component {
   state = {
@@ -40,6 +37,7 @@ class SideBar extends React.Component {
     })
       .then((res) => res.json())
       .then((resp) => {
+        console.log(resp)
         resp.map((friendship) =>
           this.setState({
             friends: [
@@ -48,6 +46,7 @@ class SideBar extends React.Component {
                 friend_id: friendship.friend_id,
                 friend_username: friendship.friend_username,
                 friendshipID: friendship.id,
+                friend_photoId: friendship.friend_photoId
               },
             ],
           })
@@ -77,7 +76,7 @@ class SideBar extends React.Component {
           });
         else
           this.setState({
-            searchedFriend: { id: resp[0].id, username: resp[0].username },
+            searchedFriend: { id: resp[0].id, username: resp[0].username, photo_id: resp[0].photo_id },
             searchedValue: "",
           });
       });
@@ -97,6 +96,7 @@ class SideBar extends React.Component {
       body: JSON.stringify({
         user2_id: user2.id,
         friend_username: user2.username,
+        friend_photoId: user2.photo_id
       }),
     })
       .then((res) => res.json())
@@ -115,6 +115,7 @@ class SideBar extends React.Component {
                 friend_id: resp.friend_id,
                 friend_username: resp.friend_username,
                 friendshipID: resp.id,
+                friend_photoId: user2.photo_id
               },
             ],
           });
@@ -140,15 +141,12 @@ class SideBar extends React.Component {
     );
   };
 
-  // handleChatRoom = (friend_username) => {
-  //   const user_username = localStorage.getItem("user_name");
-  //   const roomId = [user_username, friend_username].sort().join("&");
-  //   console.log(roomId);
-  //   this.props.history.push(`/${roomId}`);
-  //   this.setState({
-  //     roomId: roomId,
-  //   });
-  // };
+  chatStart=(friend)=>{
+    console.log({friend})
+    const { friend_username, friend_photoId }=friend
+    this.props.handleChatRoom(friend_username, friend_photoId)
+    this.props.handleChatStart(true)
+  }
 
   render() {
     return (
@@ -197,6 +195,7 @@ class SideBar extends React.Component {
                     <Typography variant="h5" component="h2">
                       {this.state.searchedFriend.username}
                     </Typography>
+                    <Avatar src={require(`../static/images/avatar/${this.state.searchedFriend.photo_id}.png`)} />
                   </CardContent>
                   <CardActions>
                     <Button
@@ -221,7 +220,7 @@ class SideBar extends React.Component {
             height: "100%",
             background: "#b1d6d8",
             display: "flex",
-            width: "500px",
+            width: "300px",
             flexDirection: "column",
           }}
         >
@@ -231,17 +230,30 @@ class SideBar extends React.Component {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                flexDirection: 'column'
               }}
             >
+              <CardContent style={{display: 'flex', alignItems: 'center'}}>
+                  <Avatar src={require(`../static/images/avatar/${localStorage.getItem("photo_id")}.png`)} /> 
+                  <Typography style={{ margin: '10px 10px 10px 5px'}} color="textSecondary" gutterBottom>
+                    {localStorage.getItem("user_name").toUpperCase()}
+                  </Typography>
+                  <Typography variant="h6" component="h3">
+                  Welcome! 
+                  </Typography>
+              </CardContent>
+              
+              <div style={{display: 'flex', alignItems: 'center', marginBottom: '5px'}}>
               <Typography
                 style={{ margin: 0 }}
-                color="textSecondary"
+                color="textSecondary" 
                 gutterBottom
               >
                 Friends:
               </Typography>
               <IconButton
                 aria-label="add"
+                style={{margin: 0, padding: 0}}
                 onClick={() => {
                   this.setState({
                     search: true,
@@ -250,6 +262,7 @@ class SideBar extends React.Component {
               >
                 <AddIcon fontSize="medium" />
               </IconButton>
+              </div>
             </div>
             {this.state.friends.map((friend) => (
               <div
@@ -260,7 +273,7 @@ class SideBar extends React.Component {
                 }}
               >
                 <Button
-                  onClick={() => this.props.handleChatRoom(friend.friend_username)}
+                  onClick={() => this.chatStart(friend)}
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
@@ -270,7 +283,8 @@ class SideBar extends React.Component {
                     width: "200px",
                     margin: "10px 0",
                   }}
-                >
+                > 
+                  <Avatar src={require(`../static/images/avatar/${friend.friend_photoId}.png`)} />
                   <Typography variant="h6">{friend.friend_username}</Typography>
                   <ChatIcon />
                 </Button>

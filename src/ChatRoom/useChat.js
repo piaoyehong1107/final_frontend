@@ -29,6 +29,6 @@ const useChat = (roomId) => {
       senderId: socketRef.current.id,
     });
   };
-  return { messages, sendMessage };
+  return { messages, sendMessage, setMessages };
 };
 export default useChat;

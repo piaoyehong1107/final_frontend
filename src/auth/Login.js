@@ -33,9 +33,11 @@ class Login extends React.Component {
       body: JSON.stringify(newUser)
     }).then(res => res.json())
     .then(resp=>{
-      console.log(resp['user'])
+      console.log(resp)
       localStorage.setItem('auth_key', resp['auth_key'],)
       localStorage.setItem('user_name',resp['user'])
+      localStorage.setItem('email',resp['email'])
+      localStorage.setItem('photo_id',resp['photo_id'])
       if (resp.error){
           this.setState({
             error: resp.error,

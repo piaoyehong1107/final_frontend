@@ -72,7 +72,7 @@ ReactDOM.render(
             />
             <Route
               exact
-              path="/:roomId"
+              path="/chat/:roomId"
               component={() => {
                 return <ChatRoom />;
               }}
