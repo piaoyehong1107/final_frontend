@@ -23,7 +23,7 @@ class ImageSelection extends Component {
         justifyContent: 'center'
       }}>
         <ImagePicker 
-          images={imageList.map((image, i) => ({src: image, value: i}))}
+          images={imageList.map((image, i) => ({src: image, value: (i+1)}))}
           onPick={(e)=>this.props.onPick(e)}
         />
       </div>
